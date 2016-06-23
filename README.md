@@ -21,3 +21,7 @@ composer install
 # OR import the /gr.sql file
 
 In this case the admin user password is admin.
+
+# DB Schema
+
+... is in the db_schema.png file
