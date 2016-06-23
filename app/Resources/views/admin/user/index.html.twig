@@ -1,0 +1,50 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Users</h1>
+    {% set routePath = path('admin_user_search') %}
+    {% include 'shared/search.html.twig' %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}.</td>
+                <td><a href="{{ path('admin_user_show', { 'id': user.id }) }}">{{ user.username }}</a></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.role.name }}</td>
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('admin_user_show', { 'id': user.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_user_edit', { 'id': user.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_user_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

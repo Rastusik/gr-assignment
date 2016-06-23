@@ -1,0 +1,47 @@
+{% extends 'base_user.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+    <h1>Accounts</h1>
+
+    {% set routePath = path('user_account_search') %}
+    {% include 'shared/search.html.twig' %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Owner</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr>
+                <td>{{ account.id }}</td>
+                <td>{{ account.owner.name }}</td>
+                <td><a href="{{ path('user_account_show', { 'id': account.id }) }}">{{ account.balance }}</a></td>
+                <td>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ path('user_account_show', { 'id': account.id }) }}">show</a>
+                        </li>
+                        {% if account.owner == app.user %}
+                        <li>
+                            <a href="{{ path('admin_account_edit', { 'id': account.id }) }}">edit</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_account_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

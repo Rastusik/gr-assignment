@@ -1,0 +1,83 @@
+{% extends 'base_user.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Account: {{ account.id }}</div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Balance</th>
+                    <td>{{ account.balance }}</td>
+                </tr>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ account.owner.name }}</td>
+                </tr>
+                <tr>
+                    <th>Disponents</th>
+                    <td>
+                        {% for disponent in account.disponents %}
+                            {{ disponent.name }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('user_account_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('user_transaction_account', { 'accountFromId': account.id }) }}">Make transaction</a>
+        </li>
+    </ul>
+
+    {% if app.user == account.owner %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Remove disponents</div>
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Disponent</th>
+                <th>Action</th>
+            </tr>
+            {% for disponent in account.disponents %}
+            <tr>
+                <td>{{ disponent.name }}</td>
+                <td><a href="{{ path('user_account_remove_disponent', { 'id': account.id, 'disponentId': disponent.id }) }}">Remove</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Add disponents</div>
+        {% set routePath = path('user_account_show_disponent_search', { 'id': account.id }) %}
+        {% include 'shared/search.html.twig' %}
+
+        {% if foundDisponents is defined %}
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Disponent</th>
+                    <th>Action</th>
+                </tr>
+                {% for disponent in foundDisponents %}
+                    <tr>
+                        <td>{{ disponent.name }}</td>
+                        <td><a href="{{ path('user_account_add_disponent', { 'id': account.id, 'disponentId': disponent.id }) }}">Add</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% include 'shared/transactions.html.twig' %}
+{% endblock %}

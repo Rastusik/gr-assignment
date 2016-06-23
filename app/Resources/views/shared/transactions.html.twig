@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+    <div class="panel-heading">Transactions</div>
+    {% if transactions %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Disponent</th>
+                <th>Sender account</th>
+                <th>Recipient account</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.id }}</td>
+                    <td>{{ transaction.createdAt|date("d.m.Y H:i:s") }}</td>
+                    <td>{{ transaction.disponent.name }}</td>
+                    <td>{{ transaction.accountFrom.id }}</td>
+                    <td>{{ transaction.accountTo.id }}</td>
+                    <td>{% if account == transaction.accountFrom %}-{% endif %}{{ transaction.amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>

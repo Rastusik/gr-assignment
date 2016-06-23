@@ -1,0 +1,37 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+        {% if user.id > 0 %}
+        Edit user: {{ user.username }}
+        {% else %}
+        Create user
+        {% endif %}
+        </div>
+
+        {% form_theme edit_form 'forms/bootstrap.html.twig' %}
+        {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <input type="submit" value="Save" />
+        {{ form_end(edit_form) }}
+    </div>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_user_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_user_change_password', { 'id': user.id }) }}">Change password</a>
+        </li>
+        {%  if delete_form %}
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+        {% endif %}
+    </ul>
+{% endblock %}

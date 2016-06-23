@@ -1,0 +1,67 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  common.listener.login:
+    class: AppBundle\Service\Authentication\LoginListener
+    arguments: ["@router", "@security.token_storage", "@event_dispatcher", "@logger"]
+    scope: request
+    tags:
+      - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+  common.controller.helper:
+    class: AppBundle\Controller\Helper
+    lazy: true
+    autowire: true
+
+  controller.default:
+    class: AppBundle\Controller\DefaultController
+    autowire: true
+
+  controller.admin.user:
+    class: AppBundle\Controller\Admin\UserController
+    autowire: true
+
+  controller.admin.account:
+    class: AppBundle\Controller\Admin\AccountController
+    autowire: true
+
+  controller.user.account:
+    class: AppBundle\Controller\User\AccountController
+    autowire: true
+
+  controller.user.transaction:
+    class: AppBundle\Controller\User\TransactionController
+    autowire: true
+
+  crud.user:
+    class: AppBundle\Service\Crud\User
+    autowire: true
+
+  crud.account:
+    class: AppBundle\Service\Crud\Account
+    autowire: true
+
+  user.account:
+      class: AppBundle\Service\User\Accounter
+      autowire: true
+
+  repository.user:
+    class: AppBundle\Model\Repository\UserRepository
+    factory: ["@doctrine.orm.entity_manager", getRepository]
+    arguments: [\AppBundle\Model\Entity\UserEntity]
+
+  repository.account:
+      class: AppBundle\Model\Repository\AccountRepository
+      factory: ["@doctrine.orm.entity_manager", getRepository]
+      arguments: [\AppBundle\Model\Entity\AccountEntity]
+
+  repository.transaction:
+      class: AppBundle\Model\Repository\TransactionRepository
+      factory: ["@doctrine.orm.entity_manager", getRepository]
+      arguments: [\AppBundle\Model\Entity\TransactionEntity]

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block zone %}
+    <div class="navbar-header">
+        <a class="navbar-brand" href="{{ path('user_account_index') }}">[user: {{ app.user.username }} - {{ app.user.name }}]</a>
+    </div>
+{% endblock %}
+
+{% block navigation %}
+    <li class="{% if app.request.attributes.get('_route') == 'user_account_index' or app.request.attributes.get('_route') == 'user_account_search' %}active{% endif %}">
+        <a href="{{ path('user_account_index') }}">Accounts</a>
+    </li>
+{% endblock %}
+

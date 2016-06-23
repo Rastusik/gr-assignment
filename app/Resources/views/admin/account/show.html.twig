@@ -1,0 +1,49 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+<div class="panel panel-default">
+    <div class="panel-heading">Account: {{ account.id }}</div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ account.id }}</td>
+                </tr>
+                <tr>
+                    <th>Balance</th>
+                    <td>{{ account.balance }}</td>
+                </tr>
+                <tr>
+                    <th>Owner</th>
+                    <td>{{ account.owner.name }}</td>
+                </tr>
+                <tr>
+                    <th>Disponents</th>
+                    <td>
+                        {% for disponent in account.disponents %}
+                            {{ disponent.name }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_account_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_account_edit', { 'id': account.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+
+    {% include 'shared/transactions.html.twig' %}
+{% endblock %}

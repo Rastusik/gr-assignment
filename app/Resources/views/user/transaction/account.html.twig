@@ -1,0 +1,36 @@
+{% extends 'base_user.html.twig' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <h1>Make transaction</h1>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Account from: {{ accountFrom.id }}, Balance: {{ accountFrom.balance }}</div>
+        <ul class="list-inline">
+            <li>
+                Search recipient account:
+            </li>
+            <li>
+                {% set routePath = path('user_transaction_account', { 'accountFromId': accountFrom.id }) %}
+                {% include 'shared/search.html.twig' %}
+            </li>
+        </ul>
+        {% if transactionForm is defined and transactionForm %}
+            {% form_theme transactionForm 'forms/bootstrap.html.twig' %}
+            {{ form_start(transactionForm) }}
+            {{ form_widget(transactionForm) }}
+            <input type="submit" value="Execute transaction" />
+            {{ form_end(transactionForm) }}
+        {% endif %}
+    </div>
+
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('user_account_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('user_account_show', { 'id': accountFrom.id }) }}">Back to account</a>
+        </li>
+    </ul>
+{% endblock %}

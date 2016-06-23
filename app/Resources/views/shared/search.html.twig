@@ -1,0 +1,14 @@
+<form action="{{ routePath }}" method="get">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"">Go!</button>
+                  </span>
+                <input type="text" name="search" class="form-control" placeholder="Search for..."
+                       value="{% if search is defined %}{{ search|e('html') }}{% endif %}">
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+</form>
+<br>
